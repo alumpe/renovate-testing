@@ -1,0 +1,48 @@
+{
+  "extends": [
+    ":enableRenovate",
+    "config:base",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":separatePatchReleases",
+    ":enablePreCommit"
+  ],
+  "suppressNotifications": ["prIgnoreNotification"],
+  "ignorePaths": ["cluster/base/flux-system"],
+  "flux": {
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
+  },
+  "helm-values": {
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
+  },
+  "kubernetes": {
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
+  },
+  "regexManagers": [
+    // Read and process Custom Resource Definitions
+    {
+      "fileMatch": ["cluster/.+\\.ya?ml$"],
+      "matchStrings": [
+        // Matches kube-prometheus-stack crds
+        "helmRepo(sitory)?=(?<registryUrl>\\S*?)\\s+chart=(?<depName>\\S*?)\\n.*?(?<currentValue>\\d+\\.\\d+\\.\\d+).*?\\n"
+      ],
+      "datasourceTemplate": "helm",
+      "extractVersionTemplate": "^.*?(?<version>\\d+\\.\\d+\\.\\d+).*?$"
+    },
+    // Read and process GitHub Releases
+    {
+      "fileMatch": ["cluster/.+\\.ya?ml$"],
+      "matchStrings": [
+        " *url: https:\\/\\/github\\.com\\/(?<depName>.*?)\\.git\\n(.|\\n)*ref:\\n *tag: (?<currentValue>.*)\\n"
+      ],
+      "datasourceTemplate": "github-releases"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["helm"],
+      "ignoreDeprecated": true
+    }
+  ]
+}
