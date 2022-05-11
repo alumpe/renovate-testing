@@ -23,7 +23,7 @@
     // Read and process Custom Resource Definitions
     {
       "fileMatch": ["cluster/.+\\.ya?ml$"],
-      "matchStringsStrategy": "recursive",
+      "matchStringsStrategy": "combination",
       "matchStrings": [
         "renovate:.*\\n.*\\n",
         // captures occurence of datasource
