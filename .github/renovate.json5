@@ -27,11 +27,11 @@
       "matchStrings": [
         "renovate:.*\\n.*\\n",
         // captures occurence of datasource
-        "renovate:(?:.*datasource=(?<datasource>[^\\s]+).*|(?!datasource=).*)\\n.*\\n",
+        "renovate:(?:.*datasource=(?<datasource>[^\\s]+).*|.*)\\n.*\\n",
         // captures occurence of depName
-        "renovate:(?:.*depName=(?<depName>[^\\s]+).*|(?!depName=).*)\\n.*\\n",
+        "renovate:(?:.*depName=(?<depName>[^\\s]+).*|.*)\\n.*\\n",
         // captures occurence of registryUrl
-        "renovate:(?:.*registryUrl=(?<registryUrl>[^\\s]+).*|(?!registryUrl=).*)\\n.*\\n",
+        "renovate:(?:.*registryUrl=(?<registryUrl>[^\\s]+).*|.*)\\n.*\\n",
         // captures currentValue
         "renovate:.*\\n.*?(?<currentValue>\\d+\\.\\d+\\.\\d+).*?\\n"
       ],
